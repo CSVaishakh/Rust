@@ -50,8 +50,7 @@ impl Operations for Vec<UserData> {
 use std::io::stdin;
 
 
-fn add_user(users: &mut Vec<UserData>){
-    let mut users = Vec::new();
+fn add_user(mut users:Vec<UserData>){
     println!("Enter the name");   
     let mut name=String::new();
     let _ = stdin()
@@ -83,8 +82,7 @@ fn add_user(users: &mut Vec<UserData>){
 }
 
 
-fn remove_user(users: &mut Vec<UserData>){
-        let mut users = users;
+fn remove_user(mut users: Vec<UserData>){
         println!("Enter the name");   
         let mut name=String::new();
         let _ = stdin()
@@ -92,8 +90,7 @@ fn remove_user(users: &mut Vec<UserData>){
         users.remove_user(name);
 }
 
-fn modify_user(users: &mut Vec<UserData>){
-    let mut users = users;
+fn modify_user(mut users:Vec<UserData>){
     println!("Enter the name");   
     let mut name=String::new();
     let _ = stdin()
@@ -150,7 +147,8 @@ fn display_users(users: &Vec<UserData>) { {
 
 fn main() {
     let mut users: Vec<UserData> = Vec::new();
-    
+
+    let mut choice = String::new();
     loop {
         println!("\nUser Management System");
         println!("1. Add user");
@@ -159,17 +157,14 @@ fn main() {
         println!("4. Display all userinfo");
         println!("5. Exit");
         println!("Enter your choice:");
-    
-        let mut choice = String::new();
         stdin().read_line(&mut choice).expect("Failed to read line");
-    
         match choice.trim() {
-            "1" => add_user(&mut users),
-            "2" => remove_user(&mut users),
-            "3" => modify_user(&mut users),
+            "1" => add_user(users),
+            "2" => remove_user(users),
+            "3" => modify_user(users),
             "4" => display_users(&users),
             "5" => break,
-            _ => println!("Invalid choice, please try again."),
+             _ => println!("Invalid choice, please try again."),
         }
     }
 }
