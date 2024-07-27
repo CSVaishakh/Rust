@@ -1,136 +1,125 @@
+
 struct UserData {
+
     name: String,
     email: String,
     age: u8,    
 }
 
+
 trait Operations {
-    fn add_user(&mut self,user:UserData);
-    fn remove_user(&mut self,name:String)->Option<UserData>;
-    fn modify_user(&mut self,name:String,new_user: UserData)->bool;
-    fn display_info(&self);
+    fn add_user(&mut self);
+    fn remove_user(&mut self)->Option<UserData>;
+    fn modify_user(&mut self);
+    fn display_users(&self);
 }
 
-trait Display {
-    
-}
+//trait Display {}
 
-impl Display for Vec<UserData> {}
+// impl Display for Vec<UserData> {}
 
 
 impl Operations for Vec<UserData> {
-    fn add_user(&mut self,user:UserData) {
-        self.push(user);
-    }
-
-    fn remove_user(&mut self,name:String) ->Option<UserData> {
-        if let Some(index) = self.iter().position(|u| u.name==name){
-            Some(self.remove(index))
-        }else{
-            None
-        }     
-    }
-    fn modify_user(&mut self,name:String,new_user: UserData)->bool {
-        if let Some(user) = self.iter_mut().find(|u| u.name==name){
-            *user = new_user;
-            true
-        }else{
-        false
-        }
-    }
-    fn display_info(&self) {
-        for user in self{
-        println!("{} , {} , {} ",user.name,user.email,user.age);
-        }
-    }
-}
-
-
-
-use std::io::stdin;
-
-
-fn add_user(mut users:Vec<UserData>){
-    println!("Enter the name");   
-    let mut name=String::new();
-    let _ = stdin()
-        .read_line(&mut name);
-
-
-    println!("Enter the email");   
-    let mut email=String::new();
-    let _ = stdin()
-        .read_line(&mut email);
-
-
-    println!("Enter the age");   
-    let mut n=String::new();
-    let _ = stdin()
-        .read_line(&mut n);
-    let mut age:u8=0;
-    match n.as_str().trim().parse::<u8>() {
-        Ok(val) => {age=val},
-        Err(error) => {println!("{:?}",error)}
-    }
-    let user = UserData {
-            name:name,
-            email:email,
-            age:age,
-    };
-
-    users.add_user(user);
-}
-
-
-fn remove_user(mut users: Vec<UserData>){
+    fn add_user(&mut self) {
         println!("Enter the name");   
         let mut name=String::new();
         let _ = stdin()
             .read_line(&mut name);
-        users.remove_user(name);
-}
-
-fn modify_user(mut users:Vec<UserData>){
-    println!("Enter the name");   
-    let mut name=String::new();
-    let _ = stdin()
-        .read_line(&mut name);
-
-    println!("Enter the new name");   
-    let mut newname=String::new();
-    let _ = stdin()
-        .read_line(&mut newname);
 
 
-    println!("Enter the email");   
-    let mut email=String::new();
-    let _ = stdin()
-        .read_line(&mut email);
+        println!("Enter the email");   
+        let mut email=String::new();
+        let _ = stdin()
+            .read_line(&mut email);
 
 
-    println!("Enter the age");   
-    let mut n=String::new();
-    let _ = stdin()
-        .read_line(&mut n);
-    let mut age:u8=0;
-    match n.as_str().trim().parse::<u8>() {
-        Ok(val) => {age=val},
-        Err(error) => {println!("{:?}",error)}
+        println!("Enter the age");   
+        let mut n=String::new();
+        let _ = stdin()
+            .read_line(&mut n);
+        let mut age:u8=0;
+        match n.as_str().trim().parse::<u8>() {
+            Ok(val) => {age=val},
+            Err(error) => {println!("{:?}",error)}
+        }
+        let user = UserData {
+                name:name,
+                email:email,
+                age:age,
+        };
+            self.push(user);
+        }
+
+    fn remove_user(&mut self)->Option<UserData> {
+        println!("Enter the name");   
+        let mut name=String::new();
+        let _ = stdin()
+            .read_line(&mut name);
+        if let Some(index) = self.iter().position(|u| u.name==name){
+            Some(self.remove(index))
+            }else{
+                None
+            }
     }
-    let new_user = UserData {
-            name:newname,
-            email:email,
-            age:age,
-    };
 
-    users.modify_user(name, new_user);
-}
-fn display_users(users: &Vec<UserData>) { {
-        users.display_info()
+    fn modify_user(&mut self){
+        println!("Enter the name");   
+        let mut name=String::new();
+        let _ = stdin()
+            .read_line(&mut name);
+    
+        println!("Enter the new name");   
+        let mut newname=String::new();
+        let _ = stdin()
+            .read_line(&mut newname);
+    
+    
+        println!("Enter the email");   
+        let mut email=String::new();
+        let _ = stdin()
+            .read_line(&mut email);
+    
+    
+        println!("Enter the age");   
+        let mut n=String::new();
+        let _ = stdin()
+            .read_line(&mut n);
+        let mut age:u8=0;
+        match n.as_str().trim().parse::<u8>() {
+            Ok(val) => {age=val},
+            Err(error) => {println!("{:?}",error)}
+        }
+        let new_user = UserData {
+                name:newname,
+                email:email,
+                age:age,
+        };
+        if let Some(user) = self.iter_mut().find(|u| u.name==name){
+            *user = new_user;
+        }else{
+            println!("user not found")
+        }
+    }
+    fn display_users(&self) {
+        for user in self{
+        println!(" {} {} {} ", user.name, user.email, user.age);
+        }
     }
 }
 
 
+impl Clone for UserData{
+    fn clone(&self)->Self{
+        UserData{
+            name:self.name.clone(),
+            email:self.email.clone(),
+            age:self.age.clone(),
+        }
+    }
+}
+
+
+use std::io::stdin;
 
     // Program capabilities
     //
@@ -148,66 +137,68 @@ fn display_users(users: &Vec<UserData>) { {
 fn main() {
     let mut users: Vec<UserData> = Vec::new();
 
-    let mut choice = String::new();
     loop {
         println!("\nUser Management System");
         println!("1. Add user");
         println!("2. Remove user");
         println!("3. Modify user");
-        println!("4. Display all userinfo");
+        println!("4. Display all user info");
         println!("5. Exit");
         println!("Enter your choice:");
+        
+        let mut choice = String::new();
         stdin().read_line(&mut choice).expect("Failed to read line");
+    
         match choice.trim() {
-            "1" => add_user(users),
-            "2" => remove_user(users),
-            "3" => modify_user(users),
-            "4" => display_users(&users),
+            "1" => users.add_user(),
+            "2" => {match users.remove_user(){
+                    Some(_) => {println!("user removed");},
+                    None => 
+                    {println!("username not found");},
+                }
+            },
+            "3" => users.modify_user(),
+            "4" => users.display_users(),
             "5" => break,
-             _ => println!("Invalid choice, please try again."),
+            _ => println!("Invalid choice, please try again."),
         }
     }
 }
 #[cfg(test)]
 mod tests {
     use super::*;
-
     #[test]
     fn test_add_user() {
-        let mut users = Vec::new();
-        let user = UserData {
-            name: "Test User".to_string(),
-            email: "test@example.com".to_string(),
-            age: 30,
-        };
-        users.add_user(user);
+        let mut users:Vec<UserData> = Vec::new();
+        users.add_user();
         assert_eq!(users.len(), 1);
-        users.display_info();
     }
     #[test]
     fn test_remove_user() {
-        let mut users = Vec::new();
-        let name:String = String::from("Test User");
-        users.remove_user(name);
+        let mut users:Vec<UserData> = Vec::new();
+        let user=UserData{
+            name:String::from("csv"),
+            email:String::from("cas@gmail"),
+            age:21,
+        };
+        users.push(user.clone());
+        let remove_data=users.remove_user().unwrap();
+        assert_eq!(remove_data.name, user.name);
+        assert_eq!(remove_data.email, user.email);
+        assert_eq!(remove_data.age, user.age);
     }
 
 
     #[test]
     fn test_modify_user() {
-        let mut users = Vec::new();
-        let user:String = String::from("Test User");
-        let new_user = UserData {
-            name: "Test User2".to_string(),
-            email: "test2@example.com".to_string(),
-            age: 23,
-        };
-        users.modify_user(user,new_user);
+        let mut users:Vec<UserData> = Vec::new();
+        users.modify_user();
     }
 
     #[test]
     fn test_display_user() {
-        let  users:Vec<UserData> = Vec::new();
-        users.display_info();
+        let users:Vec<UserData> = Vec::new();
+         users.display_users();
     }
     // Add more tests for remove_user, modify_user, etc.
 }
