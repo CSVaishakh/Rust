@@ -10,8 +10,9 @@ struct UserData {
 trait Operations {
     fn add_user(&mut self);
     fn remove_user(&mut self)->Option<UserData>;
-    fn modify_user(&mut self);
+    fn modify_user(&mut self)->Option<UserData>;
     fn display_users(&self);
+
 }
 
 //trait Display {}
@@ -20,6 +21,8 @@ trait Operations {
 
 
 impl Operations for Vec<UserData> {
+    
+    
     fn add_user(&mut self) {
         println!("Enter the name");   
         let mut name=String::new();
@@ -50,6 +53,8 @@ impl Operations for Vec<UserData> {
             self.push(user);
         }
 
+
+
     fn remove_user(&mut self)->Option<UserData> {
         println!("Enter the name");   
         let mut name=String::new();
@@ -62,47 +67,51 @@ impl Operations for Vec<UserData> {
             }
     }
 
-    fn modify_user(&mut self){
-        println!("Enter the name");   
-        let mut name=String::new();
-        let _ = stdin()
-            .read_line(&mut name);
+
+
+    fn modify_user(&mut self) -> Option<UserData> {
+        println!("Enter the name of the user to modify:");
+        let mut name = String::new();
+        let _ = stdin().read_line(&mut name);
+        let name = name.trim().to_string();
     
-        println!("Enter the new name");   
-        let mut newname=String::new();
-        let _ = stdin()
-            .read_line(&mut newname);
+        if let Some(user) = self.iter_mut().find(|u| u.name == name) {
+            println!("Enter the new name:");
+            let mut new_name = String::new();
+            let _ = stdin().read_line(&mut new_name);
     
+            println!("Enter the new email:");
+            let mut new_email = String::new();
+            let _ = stdin().read_line(&mut new_email);
     
-        println!("Enter the email");   
-        let mut email=String::new();
-        let _ = stdin()
-            .read_line(&mut email);
+            println!("Enter the new age:");
+            let mut age_input = String::new();
+            let _ = stdin().read_line(&mut age_input);
+            let new_age: u8 = match age_input.trim().parse() {
+                Ok(val) => val,
+                Err(_) => {
+                    println!("Invalid age input. User not modified.");
+                    return None;
+                }
+            };
     
+            let new_user = UserData {
+                name: new_name.trim().to_string(),
+                email: new_email.trim().to_string(),
+                age: new_age,
+            };
     
-        println!("Enter the age");   
-        let mut n=String::new();
-        let _ = stdin()
-            .read_line(&mut n);
-        let mut age:u8=0;
-        match n.as_str().trim().parse::<u8>() {
-            Ok(val) => {age=val},
-            Err(error) => {println!("{:?}",error)}
-        }
-        let new_user = UserData {
-                name:newname,
-                email:email,
-                age:age,
-        };
-        if let Some(user) = self.iter_mut().find(|u| u.name==name){
-            *user = new_user;
-        }else{
-            println!("user not found")
+            *user = new_user.clone();
+            Some(new_user)
+        } else {
+            None
         }
     }
+
+
     fn display_users(&self) {
         for user in self{
-        println!(" {} {} {} ", user.name, user.email, user.age);
+        print!(" {} {} {} ", user.name, user.email, user.age);
         }
     }
 }
@@ -119,7 +128,7 @@ impl Clone for UserData{
 }
 
 
-use std::io::stdin;
+use std::io::{stdin, stdout, Write};
 
     // Program capabilities
     //
@@ -157,13 +166,19 @@ fn main() {
                     {println!("username not found");},
                 }
             },
-            "3" => users.modify_user(),
+            "3" =>{match users.modify_user(){
+                Some(_) => {println!("user data modified");},
+                None => 
+                {println!("username not found");},
+                }
+            },
             "4" => users.display_users(),
             "5" => break,
             _ => println!("Invalid choice, please try again."),
         }
     }
 }
+
 #[cfg(test)]
 mod tests {
     use super::*;
