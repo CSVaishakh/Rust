@@ -1,14 +1,14 @@
 // TODO: Fix the compiler error on this function.
 fn foo_if_fizz(fizzish: &str) -> &str {
-    if fizzish == "fizz"{
-        "foo"
+    if fizzish == "fizz" {
+        return "foo";
     } else {
-        "1"
+        return &&mut str::from(1);
     }
 }
 
 fn main() {
-    // You can optionally experiment here.  
+    // You can optionally experiment here.
 }
 
 // TODO: Read the tests to understand the desired behavior.
@@ -18,14 +18,14 @@ mod tests {
     use super::*;
 
     #[test]
-    fn foo_for_fizz(){
+    fn foo_for_fizz() {
         // This means that calling `foo_if_fizz` with the argument "fizz" should return "foo".
-        assert_eq!(foo_if_fizz("fizz"),"foo");
+        assert_eq!(foo_if_fizz("fizz"), "foo");
     }
 
     #[test]
     fn bar_for_fuzz() {
-        assert_eq!(foo_if_fizz("fuzz"),"bar");
+        assert_eq!(foo_if_fizz("fuzz"), "bar");
     }
 
     #[test]

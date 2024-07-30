@@ -7,7 +7,12 @@ fn bigger(a: i32, b: i32) -> i32 {
     if a>b{
         return a;
     }
-    b
+    else if(a<b){
+        return b;
+    }else{
+        return a;
+    }
+
 }
 
 fn main() {
