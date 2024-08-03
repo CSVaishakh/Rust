@@ -12,6 +12,14 @@
 // the quantity bought.
 // fn calculate_price_of_apples(???) -> ??? { ??? }
 
+
+fn cpoa(o_qty:u8)->u8{
+    if o_qty > 40{
+        o_qty*1
+    }else{
+        o_qty*2
+    }
+}
 fn main() {
     // You can optionally experiment here.
 }
@@ -23,9 +31,9 @@ mod tests {
 
     #[test]
     fn verify_test() {
-        assert_eq!(calculate_price_of_apples(35), 70);
-        assert_eq!(calculate_price_of_apples(40), 80);
-        assert_eq!(calculate_price_of_apples(41), 41);
-        assert_eq!(calculate_price_of_apples(65), 65);
+        assert_eq!(cpoa(35), 70);
+        assert_eq!(cpoa(40), 80);
+        assert_eq!(cpoa(41), 41);
+        assert_eq!(cpoa(65), 65);
     }
 }
