@@ -39,5 +39,5 @@ fn main(){
     }
     let ans:u32=collatz(num);
     println!();
-    println!("{}",ans);//lentgth of the sequence is 19 when input is 9
+    println!("{}",ans);
 }
