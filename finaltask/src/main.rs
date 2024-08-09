@@ -189,15 +189,22 @@ mod tests {
         };
         users.push(user.clone());
         let remove_data = users.remove_user().unwrap();
-        assert_eq!(remove_data.name, user.name);
-        assert_eq!(remove_data.email, user.email);
-        assert_eq!(remove_data.age, user.age);
+        assert_eq!(remove_data.name,"csv");
+        assert_eq!(remove_data.email, "cas@gmail");
+        assert_eq!(remove_data.age, 21);
     }
 
     #[test]
     fn test_modify_user() {
         let mut users: Vec<UserData> = Vec::new();
+        let user = UserData {
+            name: String::from("csv"),
+            email: String::from("cas@gmail"),
+            age: 21,
+        };
+        users.push(user.clone());
         users.modify_user();
+
     }
 
     #[test]
