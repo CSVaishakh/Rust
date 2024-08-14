@@ -5,7 +5,9 @@ This repository contains Rust projects developed during the 7-day Rust bootcamp 
 ## About the Bootcamp
 
 Duration: 7 days
+
 Organizers: IEEE SPS Kerala Chapter and ELNA.ai
+
 Focus: Zero to Hero in rust within  7 days
 
 ## Projects
