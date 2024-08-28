@@ -1,1 +1,1 @@
-C:\DEVELOPMENT\RUST\collatz\target\debug\collatz.exe: C:\DEVELOPMENT\RUST\collatz\src\main.rs
+/home/vaishakh/Development/Rust/collatz/target/debug/collatz: /home/vaishakh/Development/Rust/collatz/src/main.rs
