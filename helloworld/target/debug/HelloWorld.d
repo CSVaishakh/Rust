@@ -1,1 +1,1 @@
-C:\Users\91751\Git\Development\Rust\helloworld\target\debug\HelloWorld.exe: C:\Users\91751\Git\Development\Rust\helloworld\src\main.rs
+/home/vaishakh/Code/Rust/helloworld/target/debug/HelloWorld: /home/vaishakh/Code/Rust/helloworld/src/main.rs
