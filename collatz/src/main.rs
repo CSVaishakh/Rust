@@ -24,7 +24,6 @@ fn collatz(mut n: u32)->u32{
             }
         }
     }
-
     return l;
 }
 fn main(){
